@@ -1,0 +1,7 @@
+{
+  "mcpServers": {
+    "motion_so": {
+      "enabled": true
+    }
+  }
+}

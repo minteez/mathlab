@@ -1,0 +1,87 @@
+import type { LearningPath } from '@/types';
+
+export const LEARNING_PATHS: LearningPath[] = [
+  {
+    id: 'number-explorer',
+    title: 'Number Explorer',
+    subtitle: 'Numbers → Factors → Primes → Number Theory → Patterns',
+    icon: 'Hash',
+    color: 'cyan',
+    steps: [
+      { topicId: 'c6-numbers', label: 'Number Systems', classLevel: 6 },
+      { topicId: 'c6-integers', label: 'Integers', classLevel: 6 },
+      { topicId: 'c7-rational', label: 'Rational Numbers', classLevel: 7 },
+      { topicId: 'c8-exponents', label: 'Exponents and Powers', classLevel: 8 },
+      { topicId: 'c8-square-roots', label: 'Squares and Square Roots', classLevel: 8 },
+      { topicId: 'c10-real-numbers', label: 'Real Numbers', classLevel: 10 },
+    ],
+  },
+  {
+    id: 'algebra-explorer',
+    title: 'Algebra Explorer',
+    subtitle: 'Variables → Expressions → Equations → Polynomials → Quadratics → Functions',
+    icon: 'Sigma',
+    color: 'primary',
+    steps: [
+      { topicId: 'c6-algebra', label: 'Introduction to Algebra', classLevel: 6 },
+      { topicId: 'c7-equations', label: 'Simple Equations', classLevel: 7 },
+      { topicId: 'c8-linear-equations', label: 'Linear Equations', classLevel: 8 },
+      { topicId: 'c9-polynomials', label: 'Polynomials', classLevel: 9 },
+      { topicId: 'c10-quadratic', label: 'Quadratic Equations', classLevel: 10 },
+      { topicId: 'c10-pair-linear', label: 'Pair of Linear Equations', classLevel: 10 },
+    ],
+  },
+  {
+    id: 'geometry-explorer',
+    title: 'Geometry Explorer',
+    subtitle: 'Shapes → Angles → Triangles → Similarity → Coordinate Geometry → Trigonometry',
+    icon: 'Triangle',
+    color: 'amber',
+    steps: [
+      { topicId: 'c6-geometry', label: 'Basic Geometry', classLevel: 6 },
+      { topicId: 'c6-symmetry', label: 'Symmetry', classLevel: 6 },
+      { topicId: 'c7-lines-angles', label: 'Lines and Angles', classLevel: 7 },
+      { topicId: 'c7-triangles', label: 'Triangles and Properties', classLevel: 7 },
+      { topicId: 'c9-triangles', label: 'Triangle Congruence', classLevel: 9 },
+      { topicId: 'c9-coordinate', label: 'Coordinate Geometry', classLevel: 9 },
+      { topicId: 'c10-trigonometry', label: 'Trigonometry', classLevel: 10 },
+    ],
+  },
+  {
+    id: 'probability-explorer',
+    title: 'Probability Explorer',
+    subtitle: 'Chance → Probability → Simulation → Counting → Conditional Probability',
+    icon: 'Dices',
+    color: 'primary',
+    steps: [
+      { topicId: 'c9-probability', label: 'Probability', classLevel: 9 },
+      { topicId: 'c10-probability', label: 'Combined Probability', classLevel: 10 },
+      { topicId: 'c10-combinatorics', label: 'Counting Principles', classLevel: 10 },
+    ],
+  },
+  {
+    id: 'data-explorer',
+    title: 'Data Explorer',
+    subtitle: 'Data → Mean/Median → Graphs → Statistics → Sampling → Variability',
+    icon: 'BarChart3',
+    color: 'cyan',
+    steps: [
+      { topicId: 'c6-data', label: 'Data Handling', classLevel: 6 },
+      { topicId: 'c8-graphs', label: 'Introduction to Graphs', classLevel: 8 },
+      { topicId: 'c9-statistics', label: 'Statistics', classLevel: 9 },
+      { topicId: 'c10-statistics', label: 'Advanced Statistics', classLevel: 10 },
+    ],
+  },
+  {
+    id: 'sequence-explorer',
+    title: 'Sequence Explorer',
+    subtitle: 'Patterns → Arithmetic Sequences → AP → General Term → Sum → Growth',
+    icon: 'TrendingUp',
+    color: 'amber',
+    steps: [
+      { topicId: 'c8-exponents', label: 'Exponents and Growth', classLevel: 8 },
+      { topicId: 'c10-ap', label: 'Arithmetic Progressions', classLevel: 10 },
+      { topicId: 'c10-gp', label: 'Geometric Progressions', classLevel: 10 },
+    ],
+  },
+];
