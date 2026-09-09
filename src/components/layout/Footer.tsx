@@ -12,6 +12,7 @@ const NAV_LINKS = [
   { to: '/learn', label: 'Learn' },
   { to: '/experiments', label: 'Laboratory' },
   { to: '/formula-lab', label: 'Formula Lab' },
+  { to: '/shapes-3d', label: '3D Shapes' },
   { to: '/math-minds', label: 'Math Minds' },
   { to: '/playground', label: 'Playground' },
   { to: '/discover', label: 'Discover' },

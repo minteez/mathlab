@@ -3,7 +3,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 import {
   FlaskConical, Menu, X, ChevronRight, ChevronDown, Telescope, TestTube, Trophy,
   Compass, Map, Info, Settings, Zap, Star, BookOpen, Calculator, Brain, Gamepad2,
-  Globe, Calendar, Search, Lightbulb
+  Globe, Calendar, Search, Lightbulb, Box
 } from 'lucide-react';
 import { cn } from '@/utils/cn';
 
@@ -27,6 +27,11 @@ const NAV_GROUPS = [
     label: 'Formula Lab',
     to: '/formula-lab',
     icon: Calculator,
+  },
+  {
+    label: '3D Shapes',
+    to: '/shapes-3d',
+    icon: Box,
   },
   {
     label: 'Math Minds',

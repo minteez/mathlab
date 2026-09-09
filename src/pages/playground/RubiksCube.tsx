@@ -6,7 +6,11 @@ import Button from '@/components/ui/Button';
 type Face = number[]; // 9 stickers per face
 type CubeState = { U: Face; D: Face; F: Face; B: Face; L: Face; R: Face };
 
-const COLORS = ['#f8fafc', '#fbbf24', '#22d3ee', '#f97316', '#3b82f6', '#10b981'];
+// Standard WCA color orientation:
+// U = White, D = Yellow, F = Green, B = Blue, L = Orange, R = Red
+// White opposite Yellow, Green opposite Blue, Red opposite Orange
+const COLORS = ['#f8fafc', '#fbbf24', '#22c55e', '#3b82f6', '#f97316', '#ef4444'];
+const FACE_COLORS = { U: 'White', D: 'Yellow', F: 'Green', B: 'Blue', L: 'Orange', R: 'Red' };
 const LABELS = ['U', 'D', 'F', 'B', 'L', 'R'];
 
 function solvedCube(): CubeState {
@@ -135,14 +139,14 @@ export default function RubiksCube() {
               </div>
 
               <div className="flex flex-col items-center gap-3">
-                <FaceView face={cube.U} label="U (Up)" />
+                <FaceView face={cube.U} label="U (White)" />
                 <div className="flex gap-3">
-                  <FaceView face={cube.L} label="L" />
-                  <FaceView face={cube.F} label="F" />
-                  <FaceView face={cube.R} label="R" />
-                  <FaceView face={cube.B} label="B" />
+                  <FaceView face={cube.L} label="L (Orange)" />
+                  <FaceView face={cube.F} label="F (Green)" />
+                  <FaceView face={cube.R} label="R (Red)" />
+                  <FaceView face={cube.B} label="B (Blue)" />
                 </div>
-                <FaceView face={cube.D} label="D (Down)" />
+                <FaceView face={cube.D} label="D (Yellow)" />
               </div>
             </div>
 
@@ -190,6 +194,7 @@ export default function RubiksCube() {
                 <span className="text-xs font-semibold text-amber-300">The Mathematics</span>
               </div>
               <div className="space-y-2 text-xs text-slate-400 leading-relaxed">
+                <p>Standard WCA color orientation: White opposite Yellow, Green opposite Blue, Red opposite Orange.</p>
                 <p>The Rubik's Cube has <span className="text-cyan-300 font-mono">43,252,003,274,489,856,000</span> possible states — that's 43 quintillion.</p>
                 <p>Despite this enormous number, any cube can be solved in at most <span className="text-amber-300 font-mono">20 moves</span> (God's Number).</p>
                 <p>The cube demonstrates group theory: each rotation is a permutation, and sequences of moves form algebraic structures.</p>

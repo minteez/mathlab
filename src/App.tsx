@@ -33,6 +33,7 @@ import FifteenPuzzle from '@/pages/playground/FifteenPuzzle';
 import RubiksCube from '@/pages/playground/RubiksCube';
 import Tangram from '@/pages/playground/Tangram';
 import Pentominoes from '@/pages/playground/Pentominoes';
+import Shapes3D from '@/pages/Shapes3D';
 
 function App() {
   return (
@@ -55,6 +56,7 @@ function App() {
         <Route path="/experiments/monty-hall" element={<MontyHall />} />
         <Route path="/experiments/random-walk" element={<RandomWalk />} />
         <Route path="/experiments/pythagorean-lab" element={<PythagoreanLab />} />
+        <Route path="/shapes-3d" element={<Shapes3D />} />
         <Route path="/formula-lab" element={<FormulaLab />} />
         <Route path="/math-minds" element={<MathMinds />} />
         <Route path="/playground" element={<Playground />} />
