@@ -1,7 +1,8 @@
 import { useState, useCallback } from 'react';
-import { RotateCcw, Shuffle, Info } from 'lucide-react';
+import { RotateCcw, Shuffle } from 'lucide-react';
 import Layout from '@/components/layout/Layout';
 import Button from '@/components/ui/Button';
+import MathSection from '@/components/playground/MathSection';
 
 type Face = number[]; // 9 stickers per face
 type CubeState = { U: Face; D: Face; F: Face; B: Face; L: Face; R: Face };
@@ -188,35 +189,25 @@ export default function RubiksCube() {
               </div>
             </div>
 
-            <div className="lab-card p-5 border-amber-500/20 bg-amber-500/5 space-y-3">
-              <div className="flex items-center gap-2">
-                <Info className="w-4 h-4 text-amber-400" />
-                <span className="text-xs font-semibold text-amber-300">The Mathematics</span>
-              </div>
-              <div className="space-y-2 text-xs text-slate-400 leading-relaxed">
-                <p>Standard WCA color orientation: White opposite Yellow, Green opposite Blue, Red opposite Orange.</p>
-                <p>The Rubik's Cube has <span className="text-cyan-300 font-mono">43,252,003,274,489,856,000</span> possible states — that's 43 quintillion.</p>
-                <p>Despite this enormous number, any cube can be solved in at most <span className="text-amber-300 font-mono">20 moves</span> (God's Number).</p>
-                <p>The cube demonstrates group theory: each rotation is a permutation, and sequences of moves form algebraic structures.</p>
-              </div>
-            </div>
-
-            <div className="lab-card p-5 space-y-3">
-              <h3 className="text-sm font-semibold text-slate-300">Key Concepts</h3>
-              <div className="space-y-2">
-                {[
-                  { term: 'Permutations', desc: 'Each face rotation rearranges 20 pieces' },
-                  { term: 'Group Theory', desc: 'Moves form a mathematical group' },
-                  { term: 'Symmetry', desc: 'The cube has 24 rotational symmetries' },
-                  { term: "God's Number", desc: '20 moves suffice for any state' },
-                ].map(({ term, desc }) => (
-                  <div key={term} className="bg-lab-surface rounded-lg p-3">
-                    <p className="text-sm font-semibold text-slate-300">{term}</p>
-                    <p className="text-xs text-slate-500 mt-0.5">{desc}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <MathSection
+              title="The Math Behind the Cube"
+              intro={<>
+                <p>Every face turn is a <strong className="text-cyan-300">permutation</strong> — it rearranges the positions and orientations of pieces according to a structured system. A sequence of moves can be treated as a mathematical operation: sequences can be combined, reversed, and repeated.</p>
+                <p>This is the core idea of <strong className="text-cyan-300">group theory</strong>. A group is a set of operations that can be composed, have an identity (doing nothing), and every operation has an inverse (undo it). The 18 basic face turns (6 faces × 3 rotations each) generate all 43 quintillion states.</p>
+                <p>The cube uses standard WCA colors: White opposite Yellow, Green opposite Blue, Red opposite Orange. This is not arbitrary — the fixed color scheme means every state is well-defined.</p>
+              </>}
+              formula="Total states = 8! × 3⁷ × 12! × 2¹⁰ / 2 ≈ 4.3 × 10¹⁹"
+              concepts={[
+                { term: 'Permutations', desc: 'Each face turn rearranges 20 movable pieces (8 corners + 12 edges) in a precise way' },
+                { term: 'Group Theory', desc: 'Moves form a group: they can be combined, reversed, and the identity (no move) exists' },
+                { term: 'Symmetry', desc: 'The cube has 24 rotational symmetries — you can hold it 24 different ways' },
+                { term: "God's Number", desc: 'Any of the 43 quintillion states can be solved in 20 moves or fewer' },
+                { term: 'Algorithms', desc: 'Sequences like R U R\' U\' are repeatable operations that achieve specific effects' },
+                { term: 'State Space', desc: '43,252,003,274,489,856,000 reachable configurations from the solved state' },
+              ]}
+              whyMath="The Rubik's Cube is a physical embodiment of abstract algebra. Each move is a permutation, sequences of moves compose like function multiplication, and the entire puzzle is a group. Solving it is an optimization problem: find the shortest path through a graph of 43 quintillion nodes."
+              tryThis="Scramble the cube, then try performing the same sequence of moves 6 times in a row. Notice how the cube returns to its starting state — this is because every move sequence has a finite order in the group."
+            />
           </div>
         </div>
       </div>

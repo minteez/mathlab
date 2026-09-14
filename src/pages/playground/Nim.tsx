@@ -1,7 +1,8 @@
 import { useState, useCallback } from 'react';
-import { RotateCcw, Info, Trophy, Brain } from 'lucide-react';
+import { RotateCcw, Trophy, Brain } from 'lucide-react';
 import Layout from '@/components/layout/Layout';
 import Button from '@/components/ui/Button';
+import MathSection from '@/components/playground/MathSection';
 
 const INITIAL_PILES = [3, 4, 5];
 
@@ -166,22 +167,25 @@ export default function Nim() {
         </div>
 
         {/* Math explanation */}
-        <div className="lab-card p-5 space-y-3">
-          <div className="flex items-center gap-2">
-            <Info className="w-4 h-4 text-cyan-400" />
-            <h3 className="text-sm font-semibold text-slate-200">The Mathematics</h3>
-          </div>
-          <p className="text-sm text-slate-400 leading-relaxed">
-            The key to Nim is the <strong className="text-cyan-300">nim sum</strong> — the XOR (exclusive OR) of all pile sizes, written in binary. XOR compares numbers bit by bit: 1 XOR 1 = 0, 1 XOR 0 = 1, 0 XOR 0 = 0.
-          </p>
-          <p className="text-sm text-slate-400 leading-relaxed">
-            If the nim sum is <strong className="text-emerald-300">non-zero</strong>, the player whose turn it is can force a win. If it is <strong className="text-red-300">zero</strong>, any move will make it non-zero — so that player is in a losing position (assuming the opponent plays optimally).
-          </p>
-          <div className="formula-box text-center">nim_sum = pile₁ ⊕ pile₂ ⊕ ... ⊕ pileₙ</div>
-          <p className="text-sm text-slate-400 leading-relaxed">
-            The computer uses this strategy: it finds a pile to reduce so the nim sum becomes zero, putting you in a losing position. This is an application of <strong className="text-cyan-300">combinatorial game theory</strong> and binary arithmetic.
-          </p>
-        </div>
+        <MathSection
+          title="The Math Behind Nim"
+          intro={<>
+            <p>The key to Nim is the <strong className="text-cyan-300">nim sum</strong> — the XOR (exclusive OR) of all pile sizes, written in binary. XOR compares numbers bit by bit: 1 XOR 1 = 0, 1 XOR 0 = 1, 0 XOR 0 = 0.</p>
+            <p>If the nim sum is <strong className="text-emerald-300">non-zero</strong>, the player whose turn it is can force a win. If it is <strong className="text-red-300">zero</strong>, any move will make it non-zero — so that player is in a losing position (assuming the opponent plays optimally).</p>
+          </>}
+          formula="nim_sum = pile₁ ⊕ pile₂ ⊕ ... ⊕ pileₙ"
+          concepts={[
+            { term: 'XOR (⊕)', desc: 'Bit-by-bit comparison: 1⊕1=0, 1⊕0=1, 0⊕0=0. Like addition without carrying.' },
+            { term: 'Binary Representation', desc: 'Numbers are written in base 2. XOR works on the binary digits directly.' },
+            { term: 'Winning Positions', desc: 'Non-zero nim sum = current player can win. Zero nim sum = losing position.' },
+            { term: 'Combinatorial Game Theory', desc: 'A branch of mathematics analyzing strategic, perfect-information games' },
+          ]}
+          whyMath="Nim is a perfect-information game where the optimal strategy is entirely determined by binary arithmetic. The XOR operation reveals whether a position is winning or losing — no intuition needed, just mathematics."
+          tryThis="Try entering different pile sizes below. When the nim sum is 0, the first player loses with perfect play. When it's non-zero, the first player can always win."
+        >
+          {/* Interactive XOR calculator */}
+          <NimSumCalculator />
+        </MathSection>
       </div>
     </Layout>
   );

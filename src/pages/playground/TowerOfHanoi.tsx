@@ -1,7 +1,8 @@
 import { useState, useCallback } from 'react';
-import { RotateCcw, Play, Info, Trophy } from 'lucide-react';
+import { RotateCcw, Play, Trophy } from 'lucide-react';
 import Layout from '@/components/layout/Layout';
 import Button from '@/components/ui/Button';
+import MathSection from '@/components/playground/MathSection';
 
 type Peg = number[];
 
@@ -147,19 +148,48 @@ export default function TowerOfHanoi() {
         </div>
 
         {/* Math explanation */}
-        <div className="lab-card p-5 space-y-3">
-          <div className="flex items-center gap-2">
-            <Info className="w-4 h-4 text-cyan-400" />
-            <h3 className="text-sm font-semibold text-slate-200">The Mathematics</h3>
+        <MathSection
+          title="The Math Behind the Tower"
+          intro={<>
+            <p>The Tower of Hanoi is a classic example of <strong className="text-cyan-300">recursion</strong> — solving a problem by breaking it into smaller versions of itself. To move n disks from peg A to peg C, you first move the top n−1 disks to peg B, then move the largest disk to peg C, then move the n−1 disks from B to C.</p>
+            <p>This gives the recurrence relation T(n) = 2T(n−1) + 1. Each step doubles the previous work plus one extra move. Solving this gives T(n) = 2ⁿ − 1, which is <strong className="text-cyan-300">exponential growth</strong>.</p>
+          </>}
+          formula="T(n) = 2T(n−1) + 1  ⟹  T(n) = 2ⁿ − 1"
+          concepts={[
+            { term: 'Recursion', desc: 'The solution references itself: move n−1 disks, then 1 disk, then n−1 disks again' },
+            { term: 'Exponential Growth', desc: 'Each added disk doubles the minimum moves: 1, 3, 7, 15, 31, 63, 127, 255...' },
+            { term: 'Mathematical Induction', desc: 'If the formula works for n, it provably works for n+1 — building from the base case up' },
+            { term: 'Binary Pattern', desc: 'The move sequence maps to counting in binary — each bit flip corresponds to a disk move' },
+          ]}
+          whyMath="The Tower of Hanoi demonstrates that some problems grow exponentially with size. A mere 64 disks would require 18,446,744,073,709,551,615 moves — far more than the age of the universe in seconds. This is why exponential growth matters in computer science."
+          tryThis="Set the disk count to 3 and solve it in exactly 7 moves. Then try 4 disks — the minimum is 15. Notice how each extra disk roughly doubles the effort."
+        >
+          {/* Interactive exponential growth chart */}
+          <div className="bg-lab-surface rounded-lg p-4 space-y-2">
+            <p className="text-xs text-slate-500 font-semibold">Exponential Growth: Moves vs Disks</p>
+            <div className="space-y-1.5">
+              {[1, 2, 3, 4, 5, 6, 7, 8].map(n => {
+                const moves = Math.pow(2, n) - 1;
+                const maxMoves = Math.pow(2, 8) - 1;
+                const width = (moves / maxMoves) * 100;
+                const isCurrent = n === numDisks;
+                return (
+                  <div key={n} className="flex items-center gap-2">
+                    <span className={`text-xs font-mono w-12 ${isCurrent ? 'text-cyan-300 font-bold' : 'text-slate-500'}`}>{n} disks</span>
+                    <div className="flex-1 h-5 bg-lab-bg rounded overflow-hidden relative">
+                      <div
+                        className={`h-full rounded transition-all ${isCurrent ? 'bg-gradient-to-r from-cyan-500 to-primary-500' : 'bg-slate-700'}`}
+                        style={{ width: `${Math.max(width, 2)}%` }}
+                      />
+                    </div>
+                    <span className={`text-xs font-mono w-16 text-right ${isCurrent ? 'text-cyan-300 font-bold' : 'text-slate-500'}`}>{moves}</span>
+                  </div>
+                );
+              })}
+            </div>
+            <p className="text-xs text-slate-600 italic mt-2">Each bar is twice as long as the previous — exponential growth made visible.</p>
           </div>
-          <p className="text-sm text-slate-400 leading-relaxed">
-            The minimum number of moves to solve the Tower of Hanoi with <strong className="text-cyan-300">n</strong> disks is <strong className="text-cyan-300">2ⁿ − 1</strong>. This grows exponentially — 3 disks need 7 moves, but 8 disks need 255 moves.
-          </p>
-          <p className="text-sm text-slate-400 leading-relaxed">
-            The solution is recursive: to move n disks from A to C, first move n−1 disks from A to B, then move the largest disk from A to C, then move n−1 disks from B to C. This self-referential structure is the heart of recursion.
-          </p>
-          <div className="formula-box text-center">min_moves(n) = 2ⁿ − 1</div>
-        </div>
+        </MathSection>
       </div>
     </Layout>
   );
