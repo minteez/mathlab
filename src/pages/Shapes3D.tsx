@@ -1,5 +1,5 @@
 import { useState, useMemo, useCallback, useRef, useEffect } from 'react';
-import { Box, RotateCcw, Eye, FlaskConical, Info, Calculator, Globe, Sparkles, ChevronRight } from 'lucide-react';
+import { Box, RotateCcw, Eye, FlaskConical, Info, Calculator, Globe, Sparkles, ChevronRight, ZoomIn, ZoomOut, Maximize } from 'lucide-react';
 import Layout from '@/components/layout/Layout';
 import Slider from '@/components/ui/Slider';
 import { SHAPES, SHAPE_MAP, type ShapeCategory, type ShapeDef } from '@/utils/shapes';
@@ -46,11 +46,12 @@ function Shape3DView({ shapeId, params, autoRotate, explode, netMode }: { shapeI
   const dragging = useRef(false);
   const lastPos = useRef({ x: 0, y: 0 });
   const animFrame = useRef<number | null>(null);
+  const pinchDist = useRef<number | null>(null);
+  const svgRef = useRef<SVGSVGElement>(null);
 
   // Auto-frame when shape changes
   const maxExtent = useMemo(() => getMaxExtent(shapeId, params), [shapeId, params]);
   const autoScale = useMemo(() => {
-    // Fit the shape's max extent into ~140 SVG units (out of 400 viewport)
     return Math.max(0.5, Math.min(4, 140 / Math.max(maxExtent, 1)));
   }, [maxExtent]);
 
@@ -91,6 +92,49 @@ function Shape3DView({ shapeId, params, autoRotate, explode, netMode }: { shapeI
   const onWheel = useCallback((e: React.WheelEvent) => {
     e.preventDefault();
     setZoom(z => Math.max(0.3, Math.min(3, z - e.deltaY * 0.001)));
+  }, []);
+
+  // Touch handlers
+  const onTouchStart = useCallback((e: React.TouchEvent) => {
+    if (e.touches.length === 1) {
+      dragging.current = true;
+      lastPos.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+      pinchDist.current = null;
+    } else if (e.touches.length === 2) {
+      dragging.current = false;
+      const dx = e.touches[0].clientX - e.touches[1].clientX;
+      const dy = e.touches[0].clientY - e.touches[1].clientY;
+      pinchDist.current = Math.sqrt(dx * dx + dy * dy);
+    }
+  }, []);
+
+  const onTouchMove = useCallback((e: React.TouchEvent) => {
+    e.preventDefault();
+    if (e.touches.length === 1 && dragging.current) {
+      const dx = e.touches[0].clientX - lastPos.current.x;
+      const dy = e.touches[0].clientY - lastPos.current.y;
+      setRotation(r => (r + dx * 0.5) % 360);
+      setTilt(t => Math.max(-80, Math.min(80, t + dy * 0.3)));
+      lastPos.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    } else if (e.touches.length === 2 && pinchDist.current !== null) {
+      const dx = e.touches[0].clientX - e.touches[1].clientX;
+      const dy = e.touches[0].clientY - e.touches[1].clientY;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      const delta = dist - pinchDist.current;
+      setZoom(z => Math.max(0.3, Math.min(3, z + delta * 0.005)));
+      pinchDist.current = dist;
+    }
+  }, []);
+
+  const onTouchEnd = useCallback(() => {
+    dragging.current = false;
+    pinchDist.current = null;
+  }, []);
+
+  const resetCamera = useCallback(() => {
+    setZoom(1);
+    setRotation(30);
+    setTilt(20);
   }, []);
 
   const totalScale = autoScale * zoom;
@@ -317,14 +361,40 @@ function Shape3DView({ shapeId, params, autoRotate, explode, netMode }: { shapeI
   projected.sort((a, b) => a.avgDepth - b.avgDepth);
 
   return (
-    <svg viewBox="0 0 400 400" className="w-full h-full rounded-xl touch-none cursor-grab active:cursor-grabbing" onMouseDown={onMouseDown} onMouseMove={onMouseMove} onMouseUp={onMouseUp} onMouseLeave={onMouseUp} onWheel={onWheel}>
-      <defs><radialGradient id="bg-glow" cx="50%" cy="40%"><stop offset="0%" stopColor="rgba(59,130,246,0.08)" /><stop offset="100%" stopColor="transparent" /></radialGradient></defs>
-      <rect width="400" height="400" fill="url(#bg-glow)" />
-      {projected.map((f, i) => (
-        <polygon key={i} points={f.projected.map(p => `${p.x},${p.y}`).join(' ')} fill={f.color} fillOpacity={f.opacity} stroke={f.label === 'hidden surface' ? '#ef4444' : 'rgba(15,23,42,0.4)'} strokeWidth={f.label === 'hidden surface' ? 1.5 : 0.5} strokeDasharray={f.label === 'hidden surface' ? '4 2' : undefined} />
-      ))}
-      <text x="10" y="392" fill="#475569" fontSize="9" className="font-mono">Drag to rotate · Scroll to zoom</text>
-    </svg>
+    <div className="relative w-full h-full">
+      <svg
+        ref={svgRef}
+        viewBox="0 0 400 400"
+        className="w-full h-full rounded-xl touch-none cursor-grab active:cursor-grabbing"
+        onMouseDown={onMouseDown}
+        onMouseMove={onMouseMove}
+        onMouseUp={onMouseUp}
+        onMouseLeave={onMouseUp}
+        onWheel={onWheel}
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+      >
+        <defs><radialGradient id="bg-glow" cx="50%" cy="40%"><stop offset="0%" stopColor="rgba(59,130,246,0.08)" /><stop offset="100%" stopColor="transparent" /></radialGradient></defs>
+        <rect width="400" height="400" fill="url(#bg-glow)" />
+        {projected.map((f, i) => (
+          <polygon key={i} points={f.projected.map(p => `${p.x},${p.y}`).join(' ')} fill={f.color} fillOpacity={f.opacity} stroke={f.label === 'hidden surface' ? '#ef4444' : 'rgba(15,23,42,0.4)'} strokeWidth={f.label === 'hidden surface' ? 1.5 : 0.5} strokeDasharray={f.label === 'hidden surface' ? '4 2' : undefined} />
+        ))}
+        <text x="10" y="392" fill="#475569" fontSize="9" className="font-mono">Drag to rotate · Scroll to zoom · Pinch on touch</text>
+      </svg>
+      {/* Touch-friendly control buttons */}
+      <div className="absolute bottom-3 right-3 flex flex-col gap-1.5">
+        <button onClick={() => setZoom(z => Math.min(3, z * 1.2))} aria-label="Zoom in" className="w-10 h-10 rounded-lg bg-lab-card/90 border border-lab-border flex items-center justify-center text-slate-300 hover:text-cyan-300 hover:border-cyan-500/40 transition-all shadow-lg backdrop-blur-sm">
+          <ZoomIn className="w-5 h-5" />
+        </button>
+        <button onClick={() => setZoom(z => Math.max(0.3, z / 1.2))} aria-label="Zoom out" className="w-10 h-10 rounded-lg bg-lab-card/90 border border-lab-border flex items-center justify-center text-slate-300 hover:text-cyan-300 hover:border-cyan-500/40 transition-all shadow-lg backdrop-blur-sm">
+          <ZoomOut className="w-5 h-5" />
+        </button>
+        <button onClick={resetCamera} aria-label="Reset camera" className="w-10 h-10 rounded-lg bg-lab-card/90 border border-lab-border flex items-center justify-center text-slate-300 hover:text-cyan-300 hover:border-cyan-500/40 transition-all shadow-lg backdrop-blur-sm">
+          <Maximize className="w-5 h-5" />
+        </button>
+      </div>
+    </div>
   );
 }
 
