@@ -1,7 +1,8 @@
 import { useState, useRef, useCallback } from 'react';
-import { RotateCcw, Info, Shuffle } from 'lucide-react';
+import { RotateCcw, Shuffle } from 'lucide-react';
 import Layout from '@/components/layout/Layout';
 import Button from '@/components/ui/Button';
+import MathSection from '@/components/playground/MathSection';
 
 interface Piece {
   id: number;
@@ -206,16 +207,23 @@ export default function Tangram() {
               </div>
             </div>
 
-            <div className="lab-card p-5 border-amber-500/20 bg-amber-500/5 space-y-3">
-              <div className="flex items-center gap-2">
-                <Info className="w-4 h-4 text-amber-400" />
-                <span className="text-xs font-semibold text-amber-300">The Mathematics</span>
-              </div>
-              <div className="space-y-2 text-xs text-slate-400 leading-relaxed">
-                <p>The 7 tangram pieces have a total area of 16 square units. They can form a 4×4 square.</p>
-                <p>Tangram teaches <span className="text-cyan-300">congruence</span> (pieces match exactly), <span className="text-amber-300">transformations</span> (rotation, reflection), and <span className="text-primary-300">area conservation</span> (total area never changes).</p>
-              </div>
-            </div>
+            <MathSection
+              title="The Math Behind Tangram"
+              intro={<>
+                <p>The 7 tangram pieces have a total area of 16 square units. They can form a 4×4 square. No matter how you rearrange the pieces, the total area never changes — this is <strong className="text-cyan-300">area conservation</strong>.</p>
+                <p>Tangram involves three geometric <strong className="text-amber-300">transformations</strong>: <strong>rotation</strong> (turning a piece), <strong>reflection</strong> (flipping it), and <strong>translation</strong> (sliding it). These are the fundamental rigid motions of geometry — they preserve shape and size.</p>
+                <p>The pieces include triangles of different sizes, a square, and a parallelogram. Two pieces are <strong className="text-cyan-300">congruent</strong> if they have exactly the same shape and size — the two large triangles are congruent to each other.</p>
+              </>}
+              formula="Total area = 16 sq units (always conserved)"
+              concepts={[
+                { term: 'Area Conservation', desc: 'Rearranging pieces never changes total area — area is invariant under rigid motions' },
+                { term: 'Congruence', desc: 'Two shapes are congruent if one can be transformed into the other by rotation, reflection, or translation' },
+                { term: 'Transformations', desc: 'Rotation (turn), reflection (flip), and translation (slide) — the three rigid motions' },
+                { term: 'Spatial Reasoning', desc: 'Mentally rotating and repositioning shapes to fit a target silhouette' },
+              ]}
+              whyMath="Tangram is a hands-on demonstration that area is conserved under rigid transformations. Every tangram puzzle is a proof that the same pieces can fill different shapes while their total area stays constant."
+              tryThis="Rotate a piece 45° and notice it still covers the same area. Flip the parallelogram — it becomes its mirror image but the area is unchanged. Try building a square from all 7 pieces."
+            />
           </div>
         </div>
       </div>

@@ -10,6 +10,47 @@ function nimSum(piles: number[]): number {
   return piles.reduce((a, b) => a ^ b, 0);
 }
 
+function toBinary(n: number): string {
+  return n.toString(2).padStart(4, '0');
+}
+
+function NimSumCalculator() {
+  const [p1, setP1] = useState(3);
+  const [p2, setP2] = useState(5);
+  const [p3, setP3] = useState(7);
+  const sum = p1 ^ p2 ^ p3;
+  const isWinning = sum !== 0;
+
+  return (
+    <div className="bg-lab-surface rounded-lg p-4 space-y-3">
+      <p className="text-xs text-slate-500 font-semibold">Interactive Nim-Sum Calculator</p>
+      <div className="space-y-2">
+        {[
+          { label: 'Pile 1', value: p1, set: setP1 },
+          { label: 'Pile 2', value: p2, set: setP2 },
+          { label: 'Pile 3', value: p3, set: setP3 },
+        ].map(({ label, value, set }) => (
+          <div key={label} className="flex items-center gap-2">
+            <span className="text-xs text-slate-500 w-14">{label}</span>
+            <input type="range" min={0} max={15} value={value} onChange={e => set(parseInt(e.target.value))} className="flex-1 accent-cyan-500" />
+            <span className="text-xs font-mono text-slate-300 w-8 text-right">{value}</span>
+            <span className="text-xs font-mono text-slate-600 w-20 text-right">{toBinary(value)}</span>
+          </div>
+        ))}
+      </div>
+      <div className="border-t border-lab-border pt-2 space-y-1">
+        <div className="flex items-center justify-between">
+          <span className="text-xs text-slate-500">Nim Sum (XOR)</span>
+          <span className={`text-sm font-mono font-bold ${isWinning ? 'text-emerald-400' : 'text-red-400'}`}>{sum} = {toBinary(sum)}</span>
+        </div>
+        <div className={`text-xs ${isWinning ? 'text-emerald-400' : 'text-red-400'}`}>
+          {isWinning ? 'Winning position — current player can force a win.' : 'Losing position — any move gives the opponent a winning position.'}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function computerMove(piles: number[]): number[] {
   const sum = nimSum(piles);
   if (sum === 0) {

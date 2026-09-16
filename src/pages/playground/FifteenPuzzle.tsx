@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
-import { RotateCcw, Info, Trophy, Shuffle } from 'lucide-react';
+import { RotateCcw, Trophy, Shuffle } from 'lucide-react';
 import Layout from '@/components/layout/Layout';
 import Button from '@/components/ui/Button';
+import MathSection from '@/components/playground/MathSection';
 
 const SIZE = 4;
 const TOTAL = SIZE * SIZE;
@@ -141,21 +142,23 @@ export default function FifteenPuzzle() {
         </div>
 
         {/* Math explanation */}
-        <div className="lab-card p-5 space-y-3">
-          <div className="flex items-center gap-2">
-            <Info className="w-4 h-4 text-cyan-400" />
-            <h3 className="text-sm font-semibold text-slate-200">The Mathematics</h3>
-          </div>
-          <p className="text-sm text-slate-400 leading-relaxed">
-            The 15 Puzzle is a problem in <strong className="text-cyan-300">permutations</strong> and <strong className="text-cyan-300">parity</strong>. Every arrangement of tiles is either solvable or unsolvable — there is no sequence of moves that can transform one into the other.
-          </p>
-          <p className="text-sm text-slate-400 leading-relaxed">
-            A configuration is solvable if and only if the number of inversions (pairs of tiles in the wrong order) plus the row of the empty space (counted from the bottom) is odd. Half of all possible arrangements are unsolvable — no matter how many moves you make.
-          </p>
-          <p className="text-sm text-slate-400 leading-relaxed">
-            The total number of possible configurations is <strong className="text-cyan-300">16! / 2 = 10,461,394,944,000</strong> — over 10 trillion. This vast <strong className="text-cyan-300">state space</strong> is what makes the puzzle challenging.
-          </p>
-        </div>
+        <MathSection
+          title="The Math Behind the 15 Puzzle"
+          intro={<>
+            <p>The 15 Puzzle is a problem in <strong className="text-cyan-300">permutations</strong> and <strong className="text-cyan-300">parity</strong>. Every arrangement of tiles is either solvable or unsolvable — there is no sequence of moves that can transform one into the other.</p>
+            <p>Each tile arrangement is a <strong className="text-cyan-300">state</strong>. A legal move transforms one state into another. This can be viewed as a graph: states are nodes, moves are edges. The puzzle is about finding a path from the current state to the solved state.</p>
+            <p>A configuration is solvable if and only if the number of <strong className="text-cyan-300">inversions</strong> (pairs of tiles in the wrong order) plus the row of the empty space (counted from the bottom) is odd. Half of all possible arrangements are unsolvable.</p>
+          </>}
+          formula="Solvable ⟺ (inversions + emptyRowFromBottom) is odd"
+          concepts={[
+            { term: 'Permutations', desc: 'Each arrangement of 15 tiles is a permutation of the numbers 1–15' },
+            { term: 'Parity', desc: 'Every permutation is either even or odd. Sliding preserves parity, so odd permutations can never reach even ones.' },
+            { term: 'State Space', desc: '16! / 2 = 10,461,394,944,000 reachable states — over 10 trillion' },
+            { term: 'Manhattan Distance', desc: 'A heuristic: sum of how far each tile is from its goal position. Used by solvers to estimate how many moves remain.' },
+          ]}
+          whyMath="The 15 Puzzle proves that not all configurations are reachable from each other — parity creates two disconnected worlds. This is a gateway to graph theory (states as nodes, moves as edges) and search algorithms (finding the shortest path through a graph)."
+          tryThis="Try to solve the puzzle after shuffling. Each time you shuffle, the puzzle is guaranteed to be solvable — the code checks parity before presenting it. If it didn't, half the time you'd get an impossible puzzle."
+        />
       </div>
     </Layout>
   );

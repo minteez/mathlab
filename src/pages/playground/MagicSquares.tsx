@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { RotateCcw, Info, Check, Sparkles } from 'lucide-react';
+import { RotateCcw, Check, Sparkles } from 'lucide-react';
 import Layout from '@/components/layout/Layout';
 import Button from '@/components/ui/Button';
+import MathSection from '@/components/playground/MathSection';
 
 const SIZE = 3;
 const MAGIC_SUM = 15;
@@ -131,19 +132,32 @@ export default function MagicSquares() {
         )}
 
         {/* Math explanation */}
-        <div className="lab-card p-5 space-y-3">
-          <div className="flex items-center gap-2">
-            <Info className="w-4 h-4 text-cyan-400" />
-            <h3 className="text-sm font-semibold text-slate-200">The Mathematics</h3>
+        <MathSection
+          title="The Math Behind Magic Squares"
+          intro={<>
+            <p>A magic square of size {SIZE} uses the numbers 1 to 9, each exactly once. Every row, column, and diagonal sums to the same value — the <strong className="text-cyan-300">magic constant</strong>.</p>
+            <p>Why is the magic constant 15? The sum of all numbers from 1 to 9 is 1+2+3+...+9 = 45. There are 3 rows, and each row sums to the same value, so the magic constant = 45 ÷ 3 = 15.</p>
+            <p>The challenge is a <strong className="text-cyan-300">constraint satisfaction problem</strong>: arrange 9 numbers so that 8 lines (3 rows + 3 columns + 2 diagonals) all sum to 15 simultaneously. This is much harder than it looks.</p>
+          </>}
+          formula="Magic constant = n(n² + 1) / 2 = 3(9 + 1) / 2 = 15"
+          concepts={[
+            { term: 'Magic Constant', desc: 'The fixed sum every row, column, and diagonal must equal: 15 for a 3×3 square' },
+            { term: 'Constraint Satisfaction', desc: 'Multiple conditions must hold simultaneously — changing one cell affects many lines' },
+            { term: 'Symmetry', desc: 'All 3×3 magic squares are rotations or reflections of a single solution' },
+            { term: 'Permutations', desc: 'There are 9! = 362,880 ways to arrange 1–9 in a grid, but only 8 satisfy all constraints' },
+          ]}
+          whyMath="A magic square is a constraint problem: 8 equations must all be satisfied by a single arrangement of 9 numbers. The fact that only one fundamental solution exists (up to symmetry) is a beautiful result in combinatorics."
+          tryThis="Notice that 5 is always in the center. Even numbers always occupy the corners. Try to find a magic square where this is NOT true — you will not succeed, because mathematics forbids it."
+        >
+          <div className="bg-lab-surface rounded-lg p-4 space-y-2">
+            <p className="text-xs text-slate-500 font-semibold">Why 15? The Derivation</p>
+            <div className="space-y-1 text-sm text-slate-400 font-mono">
+              <p>Sum of 1 to 9: 1 + 2 + 3 + ... + 9 = 45</p>
+              <p>3 rows, each summing to the same value S</p>
+              <p>3 × S = 45  →  S = 15</p>
+            </div>
           </div>
-          <p className="text-sm text-slate-400 leading-relaxed">
-            A magic square of size {SIZE} uses the numbers 1 to 9, each exactly once. Every row, column, and diagonal sums to the same value — the <strong className="text-cyan-300">magic constant</strong>.
-          </p>
-          <div className="formula-box text-center">Magic constant = n(n² + 1) / 2 = {SIZE}({SIZE * SIZE} + 1) / 2 = {MAGIC_SUM}</div>
-          <p className="text-sm text-slate-400 leading-relaxed">
-            For a 3×3 magic square, the magic constant is always 15. The number 5 must be in the center, and even numbers occupy the corners. There is essentially only one 3×3 magic square — all others are rotations or reflections of it.
-          </p>
-        </div>
+        </MathSection>
       </div>
     </Layout>
   );

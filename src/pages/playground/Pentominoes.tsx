@@ -1,7 +1,8 @@
 import { useState, useRef, useCallback } from 'react';
-import { RotateCcw, Info, Shuffle, Check } from 'lucide-react';
+import { RotateCcw, Shuffle, Check } from 'lucide-react';
 import Layout from '@/components/layout/Layout';
 import Button from '@/components/ui/Button';
+import MathSection from '@/components/playground/MathSection';
 
 interface Piece {
   id: number;
@@ -211,17 +212,23 @@ export default function Pentominoes() {
               </div>
             </div>
 
-            <div className="lab-card p-5 border-amber-500/20 bg-amber-500/5 space-y-3">
-              <div className="flex items-center gap-2">
-                <Info className="w-4 h-4 text-amber-400" />
-                <span className="text-xs font-semibold text-amber-300">The Mathematics</span>
-              </div>
-              <div className="space-y-2 text-xs text-slate-400 leading-relaxed">
-                <p>There are exactly <span className="text-cyan-300 font-mono">12</span> free pentominoes — shapes made of 5 equal squares connected edge-to-edge.</p>
-                <p>They can tile a 6×10 rectangle in <span className="text-amber-300 font-mono">2,339</span> distinct ways (excluding rotations and reflections).</p>
-                <p>The total area of all 12 pieces is 60 squares, matching 6×10, 5×12, 4×15, and 3×20 rectangles.</p>
-              </div>
-            </div>
+            <MathSection
+              title="The Math Behind Pentominoes"
+              intro={<>
+                <p>A <strong className="text-cyan-300">pentomino</strong> is a shape made by joining 5 equal squares edge-to-edge. There are exactly <strong className="text-cyan-300">12</strong> distinct pentominoes, named F, I, L, N, P, T, U, V, W, X, Y, and Z.</p>
+                <p>Why 12? Without considering rotations and reflections, there are 63 ways to arrange 5 squares. But many of these are the same shape rotated or flipped. Counting only <strong className="text-amber-300">free pentominoes</strong> (where rotations and reflections are considered identical), we get exactly 12.</p>
+                <p>The total area of all 12 pieces is 12 × 5 = 60 squares. This means they can tile rectangles of area 60: 6×10, 5×12, 4×15, and 3×20. The 6×10 rectangle alone has <strong className="text-amber-300">2,339</strong> distinct solutions.</p>
+              </>}
+              formula="12 pentominoes × 5 squares each = 60 total squares"
+              concepts={[
+                { term: 'Polyominoes', desc: 'Shapes formed by joining squares edge-to-edge. Pentominoes use 5 squares; tetrominoes use 4 (like Tetris).' },
+                { term: 'Free vs Fixed', desc: 'Free: rotations/reflections counted as same (12 pentominoes). Fixed: counted as different (63 one-sided).' },
+                { term: 'Tiling', desc: 'Can a set of pieces cover a board exactly with no gaps or overlaps? This is an exact-cover problem.' },
+                { term: 'Combinatorics', desc: 'Counting distinct arrangements — the mathematics of enumeration and symmetry' },
+              ]}
+              whyMath="Pentominoes connect geometry (shapes, area), combinatorics (counting arrangements), and computer science (exact-cover algorithms). The question 'Can these pieces tile this board?' is a deep mathematical problem with no simple formula — it requires search."
+              tryThis="Look at the 12 pentomino shapes on the right. Try to identify which ones have reflection symmetry (X, I, T) and which don't (F, L, N). The ones with symmetry have fewer distinct orientations."
+            />
 
             <div className="lab-card p-5 space-y-3">
               <h3 className="text-sm font-semibold text-slate-300">All 12 Pentominoes</h3>
