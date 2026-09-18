@@ -1,5 +1,14 @@
 # 📐 MathLab — Interactive Mathematics Laboratory
 
+## Gallery
+Home Page 
+<img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/c662e503-ad61-414f-9fb7-f263131b79c2" />
+Experiments Laboratory
+<img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/2343975b-6346-418d-9efb-1f7057a4e008" />
+Formula Lab
+<img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/6c1ce540-b882-4cd8-a902-677aa57b5f07" />
+
+
 > **SEE IT. PLAY WITH IT. EXPERIMENT WITH IT. UNDERSTAND WHY IT WORKS.**
 
 **MathLab** is an interactive, visual, and experimental mathematics platform created as a **Senior Category Science Exhibition project**. It combines mathematics, interactive simulations, visualizations, games, experiments, 3D models, mathematical history, and real-world applications into a single digital laboratory.
