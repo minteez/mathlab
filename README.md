@@ -1,12 +1,27 @@
 # 📐 MathLab — Interactive Mathematics Laboratory
 
 ## Gallery
+
+A few glimpses of MathLab.
+
 Home Page 
 <img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/c662e503-ad61-414f-9fb7-f263131b79c2" />
 Experiments Laboratory
 <img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/2343975b-6346-418d-9efb-1f7057a4e008" />
 Formula Lab
 <img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/6c1ce540-b882-4cd8-a902-677aa57b5f07" />
+3D Shapes
+<img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/79772a11-71e1-4ad5-8172-81ff7eb1eb9d" />
+Math Playground
+<img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/62a246ae-0143-4f8f-8c74-7f572657ff80" />
+Math Map
+<img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/6e3a5779-135c-4126-a5ef-e15843b2e4ea" />
+Research Frontier
+<img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/0deb22b1-05c2-47bd-9ffb-0dec105c281d" />
+Daily Discovery
+<img width="1593" height="900" alt="image" src="https://github.com/user-attachments/assets/ee666147-b4f5-4e62-a834-db56701ec891" />
+Math in the World
+<img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/d9dc030f-74b4-4e3c-9ef9-0581338fd940" />
 
 
 > **SEE IT. PLAY WITH IT. EXPERIMENT WITH IT. UNDERSTAND WHY IT WORKS.**
