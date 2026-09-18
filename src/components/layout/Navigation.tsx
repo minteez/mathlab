@@ -3,7 +3,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 import {
   FlaskConical, Menu, X, ChevronRight, ChevronDown, Telescope, TestTube, Trophy,
   Compass, Map, Info, Settings, Zap, Star, BookOpen, Calculator, Brain, Gamepad2,
-  Globe, Calendar, Search, Lightbulb, Box
+  Globe, Calendar, Search, Lightbulb, Box, AlertTriangle, BookMarked
 } from 'lucide-react';
 import { cn } from '@/utils/cn';
 
@@ -72,6 +72,21 @@ const NAV_GROUPS = [
     label: 'Fun Facts',
     to: '/fun-facts',
     icon: Lightbulb,
+  },
+  {
+    label: 'Reference',
+    to: '/reference',
+    icon: BookMarked,
+  },
+  {
+    label: 'Paradoxes',
+    to: '/paradoxes',
+    icon: AlertTriangle,
+  },
+  {
+    label: 'Research',
+    to: '/research-frontier',
+    icon: Telescope,
   },
   {
     label: 'About',

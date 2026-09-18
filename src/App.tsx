@@ -34,6 +34,9 @@ import RubiksCube from '@/pages/playground/RubiksCube';
 import Tangram from '@/pages/playground/Tangram';
 import Pentominoes from '@/pages/playground/Pentominoes';
 import Shapes3D from '@/pages/Shapes3D';
+import Paradoxes from '@/pages/Paradoxes';
+import ResearchFrontier from '@/pages/ResearchFrontier';
+import Reference from '@/pages/Reference';
 
 function App() {
   return (
@@ -77,6 +80,9 @@ function App() {
         <Route path="/fun-facts" element={<FunFacts />} />
         <Route path="/about" element={<About />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/paradoxes" element={<Paradoxes />} />
+        <Route path="/research-frontier" element={<ResearchFrontier />} />
+        <Route path="/reference" element={<Reference />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
