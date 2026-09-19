@@ -140,3 +140,44 @@ export interface LearningPath {
   color: string;
   steps: { topicId: string; label: string; classLevel: 6 | 7 | 8 | 9 | 10 }[];
 }
+
+export type DepthLevel = 'Foundation' | 'Core' | 'Extension' | 'University' | 'Research';
+
+export interface ConceptStep {
+  id: string;
+  title: string;
+  level: DepthLevel;
+  description: string;
+  formula?: string;
+  example?: string;
+  realWorld?: string;
+  relatedExperiment?: string;
+  challenge?: {
+    question: string;
+    answer: string;
+    type: 'numeric' | 'multiple-choice';
+    options?: string[];
+  };
+  proofNote?: string;
+}
+
+export interface MathConcept {
+  id: string;
+  title: string;
+  branch: string;
+  icon: string;
+  color: string;
+  description: string;
+  prerequisites: string[];
+  leadsTo: string[];
+  steps: ConceptStep[];
+}
+
+export interface ConceptPath {
+  id: string;
+  title: string;
+  subtitle: string;
+  icon: string;
+  color: string;
+  conceptIds: string[];
+}
