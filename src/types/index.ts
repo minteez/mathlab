@@ -159,6 +159,26 @@ export interface ConceptStep {
     options?: string[];
   };
   proofNote?: string;
+  proof?: ProofContent;
+}
+
+export type ProofTechnique =
+  | 'Pattern'
+  | 'Visual'
+  | 'Direct'
+  | 'Contradiction'
+  | 'Contrapositive'
+  | 'Induction'
+  | 'Construction'
+  | 'Analysis'
+  | 'Diagonalization';
+
+export interface ProofContent {
+  technique: ProofTechnique;
+  statement: string;
+  steps: { label: string; detail: string }[];
+  conclusion: string;
+  intuition?: string;
 }
 
 export interface MathConcept {

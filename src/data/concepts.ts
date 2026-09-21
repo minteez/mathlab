@@ -53,6 +53,19 @@ export const MATH_CONCEPTS: MathConcept[] = [
         example: 'The diagonal of a unit square has length sqrt(2) — an irrational number. The circumference of a unit circle is pi — also irrational.',
         realWorld: 'Irrational numbers appear naturally in geometry: any diagonal of a square, any circumference of a circle.',
         challenge: { question: 'Which of these is irrational?', answer: 'sqrt(3)', type: 'multiple-choice', options: ['0.5', 'sqrt(3)', '7/3', '0.333...'] },
+        proof: {
+          technique: 'Contradiction',
+          statement: 'sqrt(2) is irrational — it cannot be written as p/q for any integers p, q.',
+          intuition: 'If sqrt(2) were rational, we could write it as a fraction in lowest terms. But that assumption leads to a contradiction: the same number would have to be both even and odd.',
+          steps: [
+            { label: 'Assume the opposite', detail: 'Suppose sqrt(2) = p/q where p and q are integers with no common factor (the fraction is in lowest terms).' },
+            { label: 'Square both sides', detail: '2 = p^2/q^2, so p^2 = 2q^2. This means p^2 is even, so p must be even (an odd number squared is odd).' },
+            { label: 'Write p = 2k', detail: 'Since p is even, let p = 2k for some integer k. Then (2k)^2 = 2q^2, so 4k^2 = 2q^2, giving q^2 = 2k^2.' },
+            { label: 'q must also be even', detail: 'Now q^2 is even, so q must be even. But if both p and q are even, they share a factor of 2 — contradicting our assumption that the fraction was in lowest terms.' },
+            { label: 'Contradiction', detail: 'The assumption that sqrt(2) is rational leads to an impossibility. Therefore sqrt(2) must be irrational.' },
+          ],
+          conclusion: 'By contradiction, sqrt(2) cannot be expressed as p/q for any integers p, q. The same argument works for sqrt(3), sqrt(5), and any non-perfect square.',
+        },
       },
       {
         id: 'complex-numbers',
@@ -209,6 +222,18 @@ export const MATH_CONCEPTS: MathConcept[] = [
         realWorld: 'Projectile motion, optimization problems, and area calculations all produce quadratic equations.',
         relatedExperiment: '/experiments/function-explorer',
         challenge: { question: 'For x^2 - 7x + 12 = 0, what is the larger root?', answer: '4', type: 'numeric' },
+        proof: {
+          technique: 'Direct',
+          statement: 'The solutions of ax^2 + bx + c = 0 are x = (-b +/- sqrt(b^2 - 4ac)) / 2a (the quadratic formula).',
+          intuition: 'The formula comes from a technique called completing the square — reshaping the equation until the variable appears only once.',
+          steps: [
+            { label: 'Start with the equation', detail: 'ax^2 + bx + c = 0. Divide by a (assuming a != 0): x^2 + (b/a)x + (c/a) = 0.' },
+            { label: 'Complete the square', detail: 'x^2 + (b/a)x is the start of (x + b/2a)^2, which expands to x^2 + (b/a)x + b^2/4a^2. So add and subtract b^2/4a^2.' },
+            { label: 'Rewrite', detail: '(x + b/2a)^2 - b^2/4a^2 + c/a = 0, so (x + b/2a)^2 = b^2/4a^2 - c/a = (b^2 - 4ac)/4a^2.' },
+            { label: 'Take square root', detail: 'x + b/2a = +/- sqrt(b^2 - 4ac) / 2a, so x = (-b +/- sqrt(b^2 - 4ac)) / 2a.' },
+          ],
+          conclusion: 'The quadratic formula is derived purely by completing the square. The discriminant b^2 - 4ac determines whether the roots are real (positive), repeated (zero), or complex (negative).',
+        },
       },
       {
         id: 'sequences',
@@ -275,6 +300,18 @@ export const MATH_CONCEPTS: MathConcept[] = [
         realWorld: 'Architecture, furniture design, and art all rely on geometric principles.',
         relatedExperiment: '/experiments/geometry-lab',
         challenge: { question: 'Two angles of a triangle are 45 and 90 degrees. What is the third angle?', answer: '45', type: 'numeric' },
+        proof: {
+          technique: 'Visual',
+          statement: 'The interior angles of any triangle sum to exactly 180 degrees.',
+          intuition: 'Imagine cutting off the three corners of a paper triangle and placing them side by side. They always form a straight line — which is 180 degrees.',
+          steps: [
+            { label: 'Draw a triangle', detail: 'Take any triangle with vertices A, B, C and interior angles alpha, beta, gamma.' },
+            { label: 'Draw a line through one vertex', detail: 'Through vertex A, draw a line parallel to the opposite side BC.' },
+            { label: 'Alternate angles', detail: 'The angle at B equals the alternate angle on one side of A; the angle at C equals the alternate angle on the other side.' },
+            { label: 'Straight line = 180', detail: 'The three angles at A (alpha + the two alternate angles) lie on a straight line, so alpha + beta + gamma = 180 degrees.' },
+          ],
+          conclusion: 'No matter the triangle, the three angles always fit together to form a straight line. This is why a triangle is the rigid shape it is.',
+        },
       },
       {
         id: 'triangles',
@@ -286,6 +323,18 @@ export const MATH_CONCEPTS: MathConcept[] = [
         realWorld: 'Surveying, construction, and navigation all use triangle properties.',
         relatedExperiment: '/experiments/pythagorean-lab',
         challenge: { question: 'A right triangle has legs 9 and 12. What is the hypotenuse?', answer: '15', type: 'numeric' },
+        proof: {
+          technique: 'Visual',
+          statement: 'In a right triangle with legs a and b and hypotenuse c: a^2 + b^2 = c^2.',
+          intuition: 'Arrange four copies of the same right triangle inside a square. The area left over proves the theorem without any algebra.',
+          steps: [
+            { label: 'Build a big square', detail: 'Place four identical right triangles (legs a, b, hypotenuse c) inside a square of side (a+b). The triangles leave a smaller square of side c in the center.' },
+            { label: 'Area of the big square', detail: 'The big square has area (a+b)^2 = a^2 + 2ab + b^2.' },
+            { label: 'Area another way', detail: 'The same big square equals four triangles (each area ab/2) plus the inner square (area c^2): 4(ab/2) + c^2 = 2ab + c^2.' },
+            { label: 'Equate the two', detail: 'a^2 + 2ab + b^2 = 2ab + c^2. Cancel 2ab from both sides to get a^2 + b^2 = c^2.' },
+          ],
+          conclusion: 'This visual proof (attributed to Bhaskara and ancient Chinese mathematicians) shows the Pythagorean theorem by computing the same area two different ways.',
+        },
       },
       {
         id: 'circles',
@@ -391,6 +440,17 @@ export const MATH_CONCEPTS: MathConcept[] = [
         realWorld: 'Surveying, architecture, satellite communication, and engineering all use trigonometry.',
         relatedExperiment: '/experiments/geometry-lab',
         challenge: { question: 'What is sin 30 degrees?', answer: '0.5', type: 'multiple-choice', options: ['0.5', '0.866', '1', '0'] },
+        proof: {
+          technique: 'Direct',
+          statement: 'For any angle theta: sin^2(theta) + cos^2(theta) = 1 (the Pythagorean identity).',
+          intuition: 'On the unit circle, each point is (cos theta, sin theta). The distance from the origin to any point on the unit circle is 1 — and that distance is computed by the Pythagorean theorem.',
+          steps: [
+            { label: 'Unit circle definition', detail: 'A point on the unit circle at angle theta has coordinates (cos theta, sin theta). The radius is 1.' },
+            { label: 'Apply Pythagorean theorem', detail: 'The x-coordinate, y-coordinate, and radius form a right triangle: x^2 + y^2 = r^2.' },
+            { label: 'Substitute', detail: 'Since r = 1 on the unit circle: cos^2(theta) + sin^2(theta) = 1^2 = 1.' },
+          ],
+          conclusion: 'The Pythagorean identity holds for every angle because every point on the unit circle satisfies x^2 + y^2 = 1. This is the most used identity in trigonometry.',
+        },
       },
       {
         id: 'unit-circle',
@@ -462,6 +522,17 @@ export const MATH_CONCEPTS: MathConcept[] = [
         formula: 'lim(x->a) f(x) = L means f(x) gets arbitrarily close to L as x approaches a\nf is continuous at a if lim(x->a) f(x) = f(a)',
         example: 'lim(x->0) sin(x)/x = 1. lim(x->infinity) (1 + 1/x)^x = e ~ 2.718. The function 1/x is not continuous at x = 0.',
         challenge: { question: 'What is lim(x->0) sin(x)/x?', answer: '1', type: 'numeric' },
+        proof: {
+          technique: 'Visual',
+          statement: 'lim(x->0) sin(x)/x = 1.',
+          intuition: 'For very small angles, the arc of a circle and the chord are almost the same length. The ratio sin(x)/x measures how close they are — and it approaches 1 as the angle shrinks to zero.',
+          steps: [
+            { label: 'Geometric setup', detail: 'On the unit circle, for a small angle x (in radians), the arc length is x and the vertical height (sine) is sin(x). For small x, the arc and the sine are nearly equal.' },
+            { label: 'Squeeze theorem', detail: 'For 0 < x < pi/2: cos(x) < sin(x)/x < 1. The left side cos(x) approaches 1 as x -> 0, and the right side is already 1.' },
+            { label: 'Both bounds meet at 1', detail: 'Since sin(x)/x is squeezed between cos(x) and 1, and both approach 1 as x -> 0, the limit must be 1.' },
+          ],
+          conclusion: 'This limit is the foundation of the derivative of sin(x). Because d/dx[sin x] = lim(sin(x+h)-sin x)/h = cos(x) * lim(sin(h/2)/(h/2)) = cos(x) * 1 = cos(x).',
+        },
       },
       {
         id: 'derivatives',
@@ -535,6 +606,18 @@ export const MATH_CONCEPTS: MathConcept[] = [
         description: 'Real analysis makes calculus rigorous. It studies the structure of the real numbers (completeness), convergence of sequences and series, continuity, differentiability, and integration (Riemann and Lebesgue).',
         formula: 'Completeness: every Cauchy sequence converges\nUniform convergence: sup|f_n - f| -> 0\nLebesgue integral generalizes Riemann integral\nBanach space: complete normed space',
         proofNote: 'The construction of the real numbers (via Dedekind cuts or Cauchy sequences) fills the "gaps" in the rationals, making limits well-defined. This is the foundation of all calculus.',
+        proof: {
+          technique: 'Construction',
+          statement: 'The real numbers R are complete: every Cauchy sequence of real numbers converges to a real number.',
+          intuition: 'The rationals have gaps (like sqrt(2)). Dedekind cuts fill each gap by splitting the rationals into two sets: everything below the cut and everything above. Each cut defines a real number — rational or irrational.',
+          steps: [
+            { label: 'Dedekind cut', detail: 'A Dedekind cut is a partition of Q into two non-empty sets (A, B) where every element of A is less than every element of B, and A has no largest element.' },
+            { label: 'Rational cuts', detail: 'For a rational q, the cut A = {x in Q : x < q} defines q. The cut is at a rational point.' },
+            { label: 'Irrational cuts', detail: 'For sqrt(2), the cut A = {x in Q : x^2 < 2} defines a point that is not rational — it fills the gap where sqrt(2) should be.' },
+            { label: 'Completeness', detail: 'Every Cauchy sequence of cuts converges to a cut. There are no more gaps. The resulting complete ordered field is R.' },
+          ],
+          conclusion: 'This construction shows that R is the unique complete ordered field. Completeness is what makes calculus work: it guarantees that limits exist, that bounded monotone sequences converge, and that the Intermediate Value Theorem holds.',
+        },
       },
     ],
   },
@@ -601,6 +684,18 @@ export const MATH_CONCEPTS: MathConcept[] = [
         formula: 'LLN: X_bar -> E[X] as n -> infinity\nCLT: (X_bar - mu)/(sigma/sqrt(n)) -> N(0,1)\nFor large n, sum X_i ~ Normal(n*mu, n*sigma^2)',
         proofNote: 'The CLT is remarkable because it is distribution-free: no matter what the original distribution is (discrete, continuous, skewed), the sum converges to normal. This is why the bell curve appears everywhere.',
         realWorld: 'The CLT justifies using normal approximations in polls, quality control, and scientific experiments.',
+        proof: {
+          technique: 'Analysis',
+          statement: 'If X1, X2, ... are independent with mean mu and variance sigma^2, then (X_bar - mu)/(sigma/sqrt(n)) converges in distribution to N(0,1) as n -> infinity.',
+          intuition: 'The proof uses characteristic functions (Fourier transforms of distributions). The key insight: multiplying characteristic functions corresponds to adding random variables, and the exponential form of the normal characteristic function emerges naturally.',
+          steps: [
+            { label: 'Standardize', detail: 'Let Zi = (Xi - mu)/sigma. Then E[Zi] = 0, Var(Zi) = 1. We need to show Sn = (Z1+...+Zn)/sqrt(n) -> N(0,1).' },
+            { label: 'Characteristic function', detail: 'The characteristic function of Sn is phi_Sn(t) = [phi_Z(t/sqrt(n))]^n, where phi_Z is the CF of each standardized variable.' },
+            { label: 'Taylor expand', detail: 'phi_Z(t/sqrt(n)) = 1 - t^2/(2n) + o(1/n) for large n (using E[Z]=0, E[Z^2]=1).' },
+            { label: 'Raise to nth power', detail: '[1 - t^2/(2n) + o(1/n)]^n -> e^(-t^2/2) as n -> infinity. But e^(-t^2/2) is the characteristic function of N(0,1).' },
+          ],
+          conclusion: 'Since the characteristic function of Sn converges to that of N(0,1), the distribution of Sn converges to the standard normal. This works regardless of the original distribution — only the mean and variance matter.',
+        },
       },
       {
         id: 'hypothesis-testing',
@@ -690,6 +785,17 @@ export const MATH_CONCEPTS: MathConcept[] = [
         example: 'For A = [[2,0],[0,3]], eigenvalues are 2 and 3 with eigenvectors (1,0) and (0,1). The matrix scales by 2 in x and 3 in y.',
         realWorld: 'Google PageRank (largest eigenvalue), quantum mechanics (energy eigenvalues), PCA in machine learning, and vibration analysis.',
         proofNote: 'The spectral theorem states that symmetric matrices have real eigenvalues and orthogonal eigenvectors. This is the foundation of principal component analysis.',
+        proof: {
+          technique: 'Direct',
+          statement: 'Every real symmetric matrix has real eigenvalues and a complete set of orthogonal eigenvectors (Spectral Theorem).',
+          intuition: 'Symmetry forces eigenvalues to be real because the imaginary parts must cancel. Orthogonality follows because symmetry makes eigenvectors for different eigenvalues automatically perpendicular.',
+          steps: [
+            { label: 'Eigenvalues are real', detail: 'If Av = lambda*v for symmetric A, then v*Av = lambda(v*v). Since A is symmetric, v*Av is real, and v*v is real and positive. So lambda must be real.' },
+            { label: 'Eigenvectors are orthogonal', detail: 'If Av1 = lambda1*v1 and Av2 = lambda2*v2 with lambda1 != lambda2: lambda1(v1.v2) = (Av1).v2 = v1.(Av2) = lambda2(v1.v2). So (lambda1 - lambda2)(v1.v2) = 0, meaning v1.v2 = 0.' },
+            { label: 'Complete basis', detail: 'For repeated eigenvalues, the eigenspace has the right dimension (by the spectral theorem for symmetric matrices). Gram-Schmidt within each eigenspace produces orthogonal eigenvectors.' },
+          ],
+          conclusion: 'Every symmetric matrix can be decomposed as A = Q*Lambda*Q^T where Q is orthogonal and Lambda is diagonal. This decomposition powers PCA, vibration analysis, and quantum mechanics.',
+        },
       },
       {
         id: 'spectral-theory',
@@ -750,6 +856,18 @@ export const MATH_CONCEPTS: MathConcept[] = [
         formula: 'Direct: P => Q (derive Q from P)\nContradiction: assume not-Q, derive contradiction\nInduction: P(1) and P(n) => P(n+1) proves P for all n\nContrapositive: P => Q is same as not-Q => not-P',
         example: 'Prove "sum of two odd numbers is even": Let a = 2m+1, b = 2n+1. Then a+b = 2(m+n+1), which is even. Direct proof.',
         proofNote: 'Mathematical induction is equivalent to the well-ordering principle: every non-empty set of natural numbers has a minimum. This is an axiom of the natural numbers.',
+        proof: {
+          technique: 'Induction',
+          statement: 'The sum of the first n natural numbers is n(n+1)/2.',
+          intuition: 'Mathematical induction is like dominoes. Push the first one over (base case), and show that each one knocks down the next (inductive step). Then all dominoes fall.',
+          steps: [
+            { label: 'Base case (n=1)', detail: 'The sum of the first 1 natural numbers is just 1. The formula gives 1(1+1)/2 = 1. The base case holds.' },
+            { label: 'Inductive hypothesis', detail: 'Assume the formula holds for some n = k: 1 + 2 + ... + k = k(k+1)/2.' },
+            { label: 'Inductive step', detail: 'Show it holds for n = k+1: 1 + 2 + ... + k + (k+1) = k(k+1)/2 + (k+1) = (k(k+1) + 2(k+1))/2 = (k+1)(k+2)/2.' },
+            { label: 'This matches the formula', detail: 'For n = k+1, the formula gives (k+1)(k+2)/2 — exactly what we derived. So if it holds for k, it holds for k+1.' },
+          ],
+          conclusion: 'By the principle of mathematical induction, the formula 1 + 2 + ... + n = n(n+1)/2 holds for all natural numbers n. The base case starts the chain, and the inductive step ensures it never stops.',
+        },
       },
       {
         id: 'algorithms',
@@ -767,6 +885,19 @@ export const MATH_CONCEPTS: MathConcept[] = [
         description: 'Turing machines define what can be computed. The Halting Problem proves some problems are undecidable — no algorithm can solve them. Finite automata recognize regular languages; pushdown automata recognize context-free languages.',
         formula: 'Turing machine: (states, tape, transition function)\nHalting Problem: undecidable (Turing 1936)\nChurch-Turing thesis: TM = intuitive computability\nChomsky hierarchy: regular < CFL < CSL < RE',
         proofNote: 'Turing proved the Halting Problem undecidable by diagonalization — assuming a halting-checker exists leads to a contradiction when it analyzes itself. This mirrors Cantor\'s diagonal argument.',
+        proof: {
+          technique: 'Diagonalization',
+          statement: 'The Halting Problem is undecidable — no algorithm can determine whether an arbitrary program will halt or run forever.',
+          intuition: 'If a halting-checker existed, we could feed it a program that does the opposite of what it predicts — creating a paradox that cannot exist.',
+          steps: [
+            { label: 'Assume a halting-checker exists', detail: 'Suppose there is a program H(P, I) that returns "halts" if program P halts on input I, and "loops" if P runs forever on I.' },
+            { label: 'Build a paradoxical program', detail: 'Define a new program D(P): run H(P, P). If H says "halts", then D loops forever. If H says "loops", then D halts immediately. D does the opposite of what H predicts.' },
+            { label: 'Feed D to itself', detail: 'What happens when we run D(D)? H(D, D) must predict either "halts" or "loops".' },
+            { label: 'If H says "halts"', detail: 'Then D(D) loops forever — but H predicted it would halt. Contradiction.' },
+            { label: 'If H says "loops"', detail: 'Then D(D) halts immediately — but H predicted it would loop. Contradiction.' },
+          ],
+          conclusion: 'In both cases, H gives the wrong answer. The assumption that H exists leads to a contradiction. Therefore no such halting-checker can exist. This is the same diagonalization technique Cantor used to prove different sizes of infinity.',
+        },
       },
     ],
   },
@@ -869,6 +1000,18 @@ export const MATH_CONCEPTS: MathConcept[] = [
         description: 'Galois theory connects field extensions to group theory. It proves there is no general formula for polynomials of degree 5+ (Abel-Ruffini theorem) and that angle trisection and circle squaring are impossible with compass and straightedge.',
         formula: 'Gal(L/K) = automorphisms of L fixing K\n|Gal(L/K)| = [L : K] (for Galois extensions)\nSolvable by radicals iff Gal is solvable\nS_5 is not solvable => no quintic formula',
         proofNote: 'Evariste Galois died at 20 in a duel, having written his theory the night before. It was not understood for decades. It answered questions that had stood for centuries.',
+        proof: {
+          technique: 'Analysis',
+          statement: 'There is no general formula using radicals for polynomial equations of degree 5 or higher (Abel-Ruffini Theorem).',
+          intuition: 'Galois theory shows that a polynomial is solvable by radicals if and only if its Galois group is solvable. The symmetric group S5 (which governs degree-5 equations) is not solvable — and that is why no quintic formula exists.',
+          steps: [
+            { label: 'Galois group of a polynomial', detail: 'The Galois group of a polynomial is the group of symmetries of its roots. For a generic degree-5 polynomial, this group is S5 (all permutations of 5 roots).' },
+            { label: 'Solvability by radicals', detail: 'A polynomial is solvable by radicals if and only if its Galois group is a solvable group (one built from abelian pieces).' },
+            { label: 'S5 is not solvable', detail: 'The group S5 has a composition series S5 > A5 > {e} where A5 (the alternating group on 5 elements) is simple and non-abelian. A non-abelian simple group cannot appear in a solvable group\'s composition series.' },
+            { label: 'Therefore no formula', detail: 'Since the generic quintic has Galois group S5, and S5 is not solvable, the generic quintic cannot be solved by radicals.' },
+          ],
+          conclusion: 'This proof explains why the quadratic, cubic, and quartic formulas exist (S2, S3, S4 are solvable) but no quintic formula does (S5 is not). It also proves that angle trisection and circle squaring are impossible with compass and straightedge.',
+        },
       },
     ],
   },

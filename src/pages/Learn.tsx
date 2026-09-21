@@ -9,7 +9,7 @@ import {
 import Layout from '@/components/layout/Layout';
 import Badge from '@/components/ui/Badge';
 import { MATH_CONCEPTS, CONCEPT_PATHS, BRANCHES, DEPTH_LEVELS } from '@/data/concepts';
-import type { MathConcept, ConceptStep, DepthLevel } from '@/types';
+import type { MathConcept, ConceptStep, DepthLevel, ProofTechnique } from '@/types';
 
 import type { LucideIcon } from 'lucide-react';
 
@@ -34,6 +34,30 @@ const DEPTH_DOTS: Record<DepthLevel, number> = {
   Research: 5,
 };
 
+function ProofStepRow({ index, label, detail, color, forceShow }: { index: number; label: string; detail: string; color: string; forceShow: boolean }) {
+  const [open, setOpen] = useState(false);
+  const visible = forceShow || open;
+  return (
+    <div className="lab-card overflow-hidden">
+      <button
+        onClick={() => setOpen(!open)}
+        className="w-full p-3 flex items-center gap-3 text-left hover:bg-lab-hover transition-colors"
+      >
+        <span className={`w-7 h-7 rounded-lg bg-${color}-500/10 border border-${color}-500/20 flex items-center justify-center text-xs font-bold text-${color}-400 flex-shrink-0`}>
+          {index + 1}
+        </span>
+        <span className="text-sm font-medium text-slate-300 flex-1">{label}</span>
+        <ChevronRight className={`w-4 h-4 text-slate-600 transition-transform ${visible ? 'rotate-90' : ''}`} />
+      </button>
+      {visible && (
+        <div className="px-3 pb-3 pl-13">
+          <p className="text-sm text-slate-400 leading-relaxed pl-10">{detail}</p>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function DepthIndicator({ level, maxLevel = 5 }: { level: DepthLevel; maxLevel?: number }) {
   const filled = DEPTH_DOTS[level];
   return (
@@ -51,7 +75,8 @@ function DepthIndicator({ level, maxLevel = 5 }: { level: DepthLevel; maxLevel?:
 export default function Learn() {
   const [selectedConcept, setSelectedConcept] = useState<MathConcept | null>(null);
   const [selectedStep, setSelectedStep] = useState<ConceptStep | null>(null);
-  const [activeTab, setActiveTab] = useState<'learn' | 'example' | 'practice' | 'explore'>('learn');
+  const [activeTab, setActiveTab] = useState<'learn' | 'example' | 'practice' | 'proof' | 'explore'>('learn');
+  const [showProofSteps, setShowProofSteps] = useState(false);
   const [practiceAnswer, setPracticeAnswer] = useState<string>('');
   const [practiceResult, setPracticeResult] = useState<'correct' | 'incorrect' | null>(null);
   const [showPaths, setShowPaths] = useState(false);
@@ -93,6 +118,12 @@ export default function Learn() {
     const nextStep = stepIndex < concept.steps.length - 1 ? concept.steps[stepIndex + 1] : null;
     const prevStep = stepIndex > 0 ? concept.steps[stepIndex - 1] : null;
 
+    const PROOF_TECHNIQUE_COLORS: Record<ProofTechnique, string> = {
+      Pattern: 'emerald', Visual: 'emerald', Direct: 'cyan',
+      Contradiction: 'amber', Contrapositive: 'amber', Induction: 'amber',
+      Construction: 'primary', Analysis: 'primary', Diagonalization: 'rose',
+    };
+
     return (
       <Layout>
         <div className="max-w-3xl mx-auto px-4 sm:px-6 py-12">
@@ -121,8 +152,8 @@ export default function Learn() {
 
           {/* Tabs */}
           <div className="flex gap-1 border-b border-lab-border mb-6 overflow-x-auto">
-            {(['learn', 'example', 'practice', 'explore'] as const).map((tab) => {
-              const hasContent = tab === 'learn' || (tab === 'example' && step.example) || (tab === 'practice' && step.challenge) || (tab === 'explore' && (step.relatedExperiment || concept.leadsTo.length > 0));
+            {(['learn', 'example', 'practice', 'proof', 'explore'] as const).map((tab) => {
+              const hasContent = tab === 'learn' || (tab === 'example' && step.example) || (tab === 'practice' && step.challenge) || (tab === 'proof' && step.proof) || (tab === 'explore' && (step.relatedExperiment || concept.leadsTo.length > 0));
               if (!hasContent) return null;
               return (
                 <button
@@ -212,6 +243,46 @@ export default function Learn() {
                     <X className="w-4 h-4" /> Not quite. The answer is {step.challenge.answer}. Try again!
                   </div>
                 )}
+              </div>
+            </div>
+          )}
+
+          {activeTab === 'proof' && step.proof && (
+            <div className="space-y-5">
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className={`px-3 py-1 rounded-full text-xs font-medium bg-${PROOF_TECHNIQUE_COLORS[step.proof.technique]}-500/10 text-${PROOF_TECHNIQUE_COLORS[step.proof.technique]}-400 border border-${PROOF_TECHNIQUE_COLORS[step.proof.technique]}-500/20`}>
+                  {step.proof.technique} Proof
+                </span>
+              </div>
+              <div>
+                <h3 className="text-sm font-semibold text-cyan-300 mb-2 flex items-center gap-2"><BookOpen className="w-4 h-4" /> Statement</h3>
+                <p className="text-slate-300 leading-relaxed font-medium">{step.proof.statement}</p>
+              </div>
+              {step.proof.intuition && (
+                <div className="lab-card p-4 border-amber-500/15 bg-amber-500/5">
+                  <h4 className="text-xs font-semibold text-amber-300 mb-1 flex items-center gap-1.5"><Lightbulb className="w-3.5 h-3.5" /> Intuition</h4>
+                  <p className="text-sm text-slate-400 leading-relaxed">{step.proof.intuition}</p>
+                </div>
+              )}
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-sm font-semibold text-primary-300 flex items-center gap-2"><Calculator className="w-4 h-4" /> Proof Steps</h3>
+                  <button
+                    onClick={() => setShowProofSteps(!showProofSteps)}
+                    className="text-xs text-slate-500 hover:text-slate-300 transition-colors"
+                  >
+                    {showProofSteps ? 'Hide all' : 'Reveal all'}
+                  </button>
+                </div>
+                <div className="space-y-2">
+                  {step.proof.steps.map((ps, i) => (
+                    <ProofStepRow key={i} index={i} label={ps.label} detail={ps.detail} color={PROOF_TECHNIQUE_COLORS[step.proof!.technique]} forceShow={showProofSteps} />
+                  ))}
+                </div>
+              </div>
+              <div className="lab-card p-4 border-emerald-500/15 bg-emerald-500/5">
+                <h3 className="text-sm font-semibold text-emerald-300 mb-2 flex items-center gap-2"><Check className="w-4 h-4" /> Conclusion</h3>
+                <p className="text-sm text-slate-400 leading-relaxed">{step.proof.conclusion}</p>
               </div>
             </div>
           )}
