@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { FlaskConical, Zap, ChevronRight, Target, Eye, Sparkles, BookOpen, Calculator, Brain, Gamepad2, Globe, Calendar, Search, Star, Compass, Map, Trophy, Instagram, Youtube, Github, Globe as GlobeIcon, ExternalLink, Code2, Box, TrendingUp } from 'lucide-react';
+import { FlaskConical, Zap, ChevronRight, Target, Eye, Sparkles, BookOpen, Calculator, Brain, Gamepad2, Globe, Calendar, Search, Star, Compass, Map, Trophy, Instagram, Youtube, Github, Globe as GlobeIcon, ExternalLink, Box, TrendingUp } from 'lucide-react';
 import Layout from '@/components/layout/Layout';
 
 const FEATURES = [
@@ -189,9 +189,11 @@ export default function About() {
         <div className="lab-card p-8 space-y-6">
           <div className="section-label">About the Creator</div>
           <div className="flex items-start gap-4">
-            <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-primary-600 to-cyan-500 flex items-center justify-center shadow-glow-blue flex-shrink-0">
-              <Code2 className="w-7 h-7 text-white" />
-            </div>
+            <img
+              src="/images/creator/image.png"
+              alt="Mint, the creator of MathLab"
+              className="w-20 h-20 rounded-xl object-cover border border-lab-border shadow-glow-blue flex-shrink-0"
+            />
             <div>
               <h2 className="text-2xl font-bold text-slate-100">Mint</h2>
               <p className="text-sm text-slate-500 mt-1">Grade 10 CBSE student, developer, mathematics enthusiast, speedcuber, and cybersecurity aspirant from Coorg/Kodagu.</p>
