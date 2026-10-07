@@ -1,0 +1,3 @@
+MathLab turns dry equations into living experiments. Spin 3D shapes, master formulas dynamically, and play math like never before.
+
+Try it now: https://mathlab.bolt.host
